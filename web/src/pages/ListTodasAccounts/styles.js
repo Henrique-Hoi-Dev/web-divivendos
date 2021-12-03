@@ -83,6 +83,14 @@ export const Container = styled.div`
     }
   }
 
+  .MuiTypography-gutterBottom {
+    font-weight: 700;
+  }
+  .MuiTableCell-head {
+    font-weight: 700;
+    color: #9c98a6;
+  }
+
   @media screen and (max-width: 600px) {
     table {
       border: 0;

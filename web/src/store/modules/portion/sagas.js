@@ -1,7 +1,7 @@
 import { takeLatest, call, all, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
-// import history from '~/services/history';
+import history from '~/services/history';
 import api from '~/services/api2';
 
 import {
@@ -38,6 +38,7 @@ export function* UpdatePortion({ payload }) {
 
     yield put(UpdatePortionSuccess(response.data));
     toast.success('Editado com sucesso.');
+    history.push('/')
   } catch (err) {
     toast.error('Error no editar parcela.');
     yield put(portionFailure());

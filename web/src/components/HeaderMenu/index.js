@@ -8,9 +8,12 @@ export default function Home() {
     <Container>
       <img src={logo} alt="img" />
       <Header> 
+        <Link to="/">
+          Inicio
+        </Link>  
         <Link to="/registreAccount">
           Registrar Nova Dívida
-        </Link>               
+        </Link>                            
       </Header>
     </Container>
   );

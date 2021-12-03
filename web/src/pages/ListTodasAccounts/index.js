@@ -30,6 +30,7 @@ import {
 
 import { Container } from './styles';
 import Header from '../../components/HeaderListAndRegister';
+import Card from '~/components/Card';
 
 const useRowStyles = makeStyles({
   root: {
@@ -119,18 +120,18 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
                       <TableCell>N Parcela</TableCell>
                       <TableCell align="right">Status</TableCell>
                       <TableCell align="right">Data Vencimento</TableCell>
-                      <TableCell align="right">Editar</TableCell>
-                      <TableCell align="right">Excluir</TableCell>
+                      <TableCell align="center">Editar</TableCell>
+                      <TableCell align="center" color="#fff">Excluir</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                  {row.parcela.map((parcelas, i) => (
+                  {[].concat(row.parcela).map((parcelas, i) => (
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">{currencyFormat(parcelas.valor)}</TableCell>
                       <TableCell>{parcelas.numero_parcela}</TableCell>
-                      <TableCell align="right" style={{ color: (parcelas.pago === true && 'green') || 
-                      (parcelas.pago === false && 'red') }}
-                      >
+                      <TableCell align="right" style={{ color: 
+                      (parcelas.pago === true && 'green') || 
+                      (parcelas.pago === false && 'red') }} >
                       {(parcelas.pago === true && 'Pago') || 
                        (parcelas.pago === false && 'Devendo')}
                       </TableCell>
@@ -162,7 +163,9 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
 
   return (
     <Container>
-      <Header title="Lista Dividendos"/>
+      <Header title="Lista Dívidendos"/>
+      <Card />
+
       <div className="header-main">
         <form className="form-table">
             <TableContainer component={Paper}>
@@ -183,10 +186,7 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
                 ))}
               </TableBody>
             </Table>
-          </TableContainer>
-
-         
-
+          </TableContainer>        
         </form>
       </div>
     </Container>

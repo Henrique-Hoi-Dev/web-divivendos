@@ -88,24 +88,27 @@ export default {
       const dataAtual = new Date();
     
       const valid = accounts.filter(function (result) {
-        if (result.dataValues.data_vencimento <= dataAtual) {
+        const vencido = new Date(result.dataValues.data_vencimento)
+        if (vencido <= dataAtual) {
           if (result.dataValues.status === 'pendente')
           return result.dataValues;
         }
       });
       const contasVencidas = valid.map(function (par) {
         const parcelas = par.dataValues.parcela;
-          const valoresParcelas = parcelas.map(function (valores) {
-            return valores.valor
-          })    
-          const parcela = parseInt(valoresParcelas);         
-          return parcela
-      });
-      const totalVenvidas = contasVencidas.reduce((acumulado, x) => {
-        return acumulado + x;
+          const result = parcelas.map(function (valores) {
+            const res = parseInt(valores.dataValues.valor);
+            return res
+          }) 
+            const totalVencidas = result.reduce((acumulado, x) => {    
+            return acumulado + x;
+          }); 
+          return totalVencidas
       });
 
-      result = {totalVenvidas}      
+        
+
+      result = contasVencidas      
       return result
     } catch (error) {
       return res.status(400).json(error)

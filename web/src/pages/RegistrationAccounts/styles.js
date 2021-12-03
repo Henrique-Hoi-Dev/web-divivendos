@@ -13,7 +13,8 @@ export const Container = styled.div`
     border-radius: 0.8rem;
     margin: -3rem auto 3.2rem;
     padding-top: 3rem;
-    overflow: hidden;   
+    overflow: hidden;  
+  
 
   input {
     font: 1rem Archivo;
@@ -67,6 +68,36 @@ export const Container = styled.div`
 
   .header-title {
 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 1fr;
+    grid-template-areas:
+      'campo1 campo2'
+      'footer footer';
+
+    .campo1 {
+      grid-area: campo1;
+      margin-left: 70px;
+    }
+    .campo2 {
+      grid-area: campo2;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-left: 70px;
+
+      .buttons-container {
+        margin-top: 10px;
+
+        a {
+          margin-right: 30px;
+          text-decoration: none;
+        }
+      }
+    }
+    .footer {
+      grid-area: footer;
+    }  
 
     label {
       font: 700 1.4rem Archivo;

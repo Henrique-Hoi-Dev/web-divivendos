@@ -44,28 +44,28 @@ export default function RegistrationPortion(props) {
 
   return (
     <Container>
-      <Header title="Registre todas as parcelas"/>
+      <Header title="Registro/Editar Parcelas"/>
       <div className="header-main">
-        <Formik
-          onSubmit={handleSubmit}
-          enableReinitialize={true}
-          initialValues={form} >
+        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form} >
             <Form className="form-input">
               <div id="container-input" className="header-title">
-                <div className="campo2">
-                  <label htmlFor="valor">Valor</label>
+
+                <div className="campo1">
+                  <label htmlFor="valor">Valor Parcela</label>
                   <Field 
                     name="valor" 
                     placeholder="valor" />
                   <label htmlFor="numero_parcela">Número Parcela</label>
                   <Field 
                     name="numero_parcela" 
-                    placeholder="nome conta" />
+                    placeholder="numero" />
+                </div>
+
+                <div className="campo2">
                   <label htmlFor="data_vencimento">Data vencimento</label>
                   <Field 
                     name="data_vencimento" 
-                    type="date" 
-                    placeholder="data vencimento" /> 
+                    type="date" /> 
                   <label htmlFor="pago">Status</label>
                   <Field component="select" id="location" name="pago">
                     <option value="false">Devendo</option>

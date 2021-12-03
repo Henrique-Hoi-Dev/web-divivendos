@@ -1,7 +1,6 @@
 import Account from "../app/models/Account";
 import Portion from "../app/models/Portion";
 import httpStatus from 'http-status-codes';
-import * as moment from 'moment';
 
 export default {
   // create uma nova conta
@@ -94,106 +93,6 @@ export default {
     } catch (error) {
       console.log(error);
       return res.status(400).json(error.message);
-    }
-  },
-  // busca todas as contas vencidas
-  async getAccountOverdueDetails(req, res) {
-    try {
-      const accounts = await Account.findAll({
-        include: [
-          {
-            model: Portion,
-            as: 'parcela',
-            attributes: ['numero_parcela', 'id', 'valor', 'pago']
-          }
-        ]
-      });
-
-      const dataAtual = new Date();
-      
-      const valid = accounts.filter(function (result) {
-        const vencido = new Date(result.dataValues.data_vencimento)
-        if (vencido <= dataAtual) {
-          if (result.dataValues.status === 'pendente')
-          return result.dataValues;
-        }
-      });
-
-      return valid;
-    } catch (error) {
-      return res.status(400).json(error);
-    }
-  },
-  // busca todas as contas pagas
-  async getAccountPaidDetails(req, res) {
-    try {
-      const accounts = await Account.findAll({
-        include: [
-          {
-            model: Portion,
-            as: 'parcela',
-            attributes: ['numero_parcela', 'id', 'valor', 'pago']
-          }
-        ]
-      });
-
-      const valid = accounts.filter(function (result) {
-        if (result.dataValues.status === 'pago') {
-          return result.dataValues;
-        }
-      });
-
-      return valid;
-    } catch (error) {
-      return res.status(400).json(error);
-    }
-  },
-  // busca todas as contas pendentes
-  async getAccountPendingDetails(req, res) {
-    try {
-      const accounts = await Account.findAll({
-        include: [
-          {
-            model: Portion,
-            as: 'parcela',
-            attributes: ['numero_parcela', 'id', 'valor', 'pago']
-          }
-        ]
-      });
-
-      const valid = accounts.filter(function (result) {
-        if (result.dataValues.status === 'pendente') {
-          return result.dataValues;
-        }
-      });
-
-      return valid;
-    } catch (error) {
-      return res.status(400).json(error);
-    }
-  },
-  // busca todas as contas canceladas
-  async getAccountCancelDetails(req, res) {
-    try {
-      const accounts = await Account.findAll({
-        include: [
-          {
-            model: Portion,
-            as: 'parcela',
-            attributes: ['numero_parcela', 'id', 'valor', 'pago']
-          }
-        ]
-      });
-
-      const valid = accounts.filter(function (result) {
-        if (result.dataValues.status === 'cancelado') {
-          return result.dataValues;
-        }
-      });
-
-      return valid;
-    } catch (error) {
-      return res.status(400).json(error);
     }
   },
 }

@@ -33,62 +33,6 @@ export function findAllAccountSuccess(data) {
   };
 }
 
-export function findAllPaidAccountRequest(data) {
-  return {
-    type: '@account/FIND_ALL_PAID_ACCOUNT_REQUEST',
-    payload: { data },
-  };
-}
-
-export function findAllPaidAccountSuccess(data) {
-  return {
-    type: '@account/FIND_ALL_PAID_ACCOUNT_SUCCESS',
-    payload: { data },
-  };
-}
-
-export function findAllPendingAccountRequest(data) {
-  return {
-    type: '@account/FIND_ALL_PENDING_ACCOUNT_REQUEST',
-    payload: { data },
-  };
-}
-
-export function findAllPendingAccountSuccess(data) {
-  return {
-    type: '@account/FIND_ALL_PENDING_ACCOUNT_SUCCESS',
-    payload: { data },
-  };
-}
-
-export function findAllLateAccountRequest(data) {
-  return {
-    type: '@account/FIND_ALL_LATE_ACCOUNT_REQUEST',
-    payload: { data },
-  };
-}
-
-export function findAllLateAccountSuccess(data) {
-  return {
-    type: '@account/FIND_ALL_LATE_ACCOUNT_SUCCESS',
-    payload: { data },
-  };
-}
-
-export function findAllCancelAccountRequest(data) {
-  return {
-    type: '@account/FIND_ALL_CANCEL_ACCOUNT_REQUEST',
-    payload: { data },
-  };
-}
-
-export function findAllCancelAccountSuccess(data) {
-  return {
-    type: '@account/FIND_ALL_CANCEL_ACCOUNT_SUCCESS',
-    payload: { data },
-  };
-}
-
 export function UpdateAccountRequest(data) {
   return {
     type: '@account/UPDATE_ACCOUNT_REQUEST',

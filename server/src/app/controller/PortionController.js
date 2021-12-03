@@ -1,6 +1,3 @@
-import * as Yup from 'yup';
-import Portion from '../models/Portion';
-import Account from '../models/Account';
 import PortionService from '../../service/PortionService'
 
 class PortionController {

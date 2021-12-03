@@ -63,6 +63,25 @@ export const Container = styled.div`
 
   .header-title {
 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 1fr;
+    grid-template-areas:
+        'campo1 campo2'
+        'button button';
+
+    .campo1 {
+      grid-area: campo1;
+      margin-left: 70px;
+    }
+    .campo2 {
+      grid-area: campo2;
+      margin-left: 70px;
+    }
+    .buttons-container {
+      grid-area: button;
+    } 
+
 
     label {
       font: 700 1.4rem Archivo;
@@ -98,39 +117,5 @@ export const Container = styled.div`
   }  
 
   @media (max-width: 700px) {
-    #container-input {
-      max-width: 1100px;
-
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 5px 455px 1fr;
-      grid-template-areas:
-        'name name name'
-    }
-
-    .name-campo {
-      grid-area: name;    
-    }
-
-    .campo2 {
-      grid-area: campo2;
-    }
-    .campo3 {
-      grid-area: campo3;
-
-      ul {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-    .campo4 {
-      grid-area: campo4;
-    }
-    .campo5 {
-      grid-area: campo5;
-    }
-    .buttons-container {
-      grid-area: button;
-    }  
   }
 `;

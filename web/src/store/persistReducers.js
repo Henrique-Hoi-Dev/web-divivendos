@@ -6,7 +6,7 @@ export default (reducers) => {
     {
       key: 'vendas',
       storage,
-      whitelist: ['account', 'portion'],
+      whitelist: ['account', 'portion', 'card'],
     },
     reducers
   );

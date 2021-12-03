@@ -4,11 +4,7 @@ import AccountController from './app/controller/AccountController';
 import CardController from './app/controller/CardController';
 import PortionController from './app/controller/PortionController';
 
-import authMiddleware from './app/middlewares/auth';
-
 const routes = new Router();
-
-routes.use(authMiddleware);
 
 // rotas de account
 routes.post('/account/new', AccountController.storeAccount);

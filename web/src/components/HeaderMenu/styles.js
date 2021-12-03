@@ -27,7 +27,7 @@ export const Header = styled.div`
 
   a {
     font: 700 1rem Archivo;
-    margin-left: 40px;
+    margin-left: 30px;
     color: #9c98a6;
     text-decoration: none;
 

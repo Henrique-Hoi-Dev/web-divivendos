@@ -48,15 +48,13 @@ export default function RegistrationAccounts() {
 
   return (
     <Container>
-      <Header title="Registro de contas"/>
+      <Header title="Registro/Editar Dívidendos"/>
       <div className="header-main">
-        <Formik
-          onSubmit={handleSubmit}
-          enableReinitialize={true}
-          initialValues={form}>
+        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form}>
             <Form className="form-input">
               <div id="container-input" className="header-title">
-                <div className="campo2">
+
+                <div className="campo1">
                   <label htmlFor="name">Conta</label>
                   <Field 
                     name="name" 
@@ -69,25 +67,31 @@ export default function RegistrationAccounts() {
                     placeholder="data vencimento"
                     />
                     
+                  
+                </div>
+                <div className="campo2">
                   <label htmlFor="status">Status</label>
                   <Field component="select" id="location" name="status">
                     <option value="pendente">Pendente</option>
                     <option value="cancelado">Cancelado</option>
                     <option value="pago">Pago</option>
                   </Field>
-                </div>              
-                <footer className="buttons-container">
+                  <div className="buttons-container">
+                    <button>
+                      <Link style={renderButton} to={`/registrePortion/${id}`}>
+                        Criar parcelas
+                      </Link>
+                    </button>
+                    <button type="submit">Salvar</button>
+                  </div>
+                </div> 
+
+                <footer className="footer">
                     <p>
                       <FcHighPriority />
                       Importante! <br />
                       Preencha todos os dados
                     </p>
-                  <button type="submit">Salvar</button>
-                  <button>
-                    <Link style={renderButton} to={`/registrePortion/${id}`}>
-                      Criar parcelas
-                    </Link>
-                  </button>
                 </footer>
               </div>
             </Form>
