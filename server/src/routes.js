@@ -16,7 +16,7 @@ routes.delete('/account/:id', AccountController.deleteAccountId);
 // rotas de parcelas
 routes.post('/account/:accounts_id/portion', PortionController.storePortion);
 routes.put('/portion/:id', PortionController.updatePortionId);
-routes.get('/portionAccount/:accounts_id', PortionController.getPortionDetailsWithValouTotal);
+routes.get('/portionAccount/:accounts_id', PortionController.getPortionDetailsWithValeuAll);
 routes.get('/portion/:id', PortionController.getPortionDetailsId);
 routes.delete('/portion/:id', PortionController.deletePortionId);
 

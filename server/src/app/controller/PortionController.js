@@ -7,17 +7,17 @@ class PortionController {
     try {
       response = await PortionService.storePortion(req.params, req.body);
       console.log(response)
-      return res.status(200).send(response);
+      return res.status(201).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro em cria uma nova parcela'});
     }
   }
   // busca conta por Id com todas as parcelas, com soma de todos os valores 
-  async getPortionDetailsWithValouTotal(req, res) {
+  async getPortionDetailsWithValeuAll(req, res) {
     let response;      
     try {
-      response = await PortionService.getPortionDetailsWithValouTotal(req.params);
+      response = await PortionService.getPortionDetailsWithValeuAll(req.params);
       return res.status(200).send(response);
         
     } catch (error) {

@@ -1,5 +1,6 @@
 import Account from "../app/models/Account";
 import Portion from "../app/models/Portion";
+import httpStatus from 'http-status-codes';
 
 export default {
   // busca total valores das contas CARD
@@ -18,10 +19,10 @@ export default {
         return acumulado + x;
       });
       
-      result = {totalContas}      
+      result = {httpStatus: httpStatus.OK, status: "successful", totalContas: totalContas}      
       return result
     } catch (error) {
-      return res.status(400).json(error)
+      return res.status(404).json(error)
     }
   },
   // busca total valores pagas CARD
@@ -42,10 +43,10 @@ export default {
         return acumulado + x;
       });
   
-      result = {totalPagas}      
+      result = {httpStatus: httpStatus.OK, status: "successful", totalPagas: totalPagas}      
       return result;
     } catch (error) {
-      return res.status(400).json(error)
+      return res.status(404).json(error)
     }
   },
   // busca total valores pendente CARD
@@ -66,10 +67,10 @@ export default {
         return acumulado + x;
       });
 
-      result = {totalPendente}      
+      result = {httpStatus: httpStatus.OK, status: "successful", totalPendente: totalPendente}      
       return result
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(404).json(error);
     }
   },
   // busca total valores vencido CARD
@@ -101,17 +102,16 @@ export default {
             return res
           }) 
             const totalVencidas = result.reduce((acumulado, x) => {    
-            return acumulado + x;
-          }); 
-          return totalVencidas
+              return acumulado + x;
+            });
+            
+            return totalVencidas
       });
-
-        
-
-      result = contasVencidas      
+     
+      result = {httpStatus: httpStatus.OK, status: "successful", contasVencidas: contasVencidas}    
       return result
     } catch (error) {
-      return res.status(400).json(error)
+      return res.status(404).json(error)
     }
   },
 }

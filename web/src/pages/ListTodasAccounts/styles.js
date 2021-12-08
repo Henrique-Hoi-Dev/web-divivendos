@@ -40,7 +40,7 @@ export const Container = styled.div`
 
       background: none;
       border: 0;
-      margin-left: 2rem;
+      margin-left: 3rem;
       color: #8945de;
       font: 700 1.5rem Archivo;
       cursor: pointer;

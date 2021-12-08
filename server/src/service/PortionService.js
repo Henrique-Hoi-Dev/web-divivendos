@@ -55,7 +55,7 @@ export default {
     }
   },
   // busca conta por Id com todas as parcelas, com soma de todos os valores 
-  async getPortionDetailsWithValouTotal(req, res) {
+  async getPortionDetailsWithValeuAll(req, res) {
     let id = req.accounts_id;
     console.log(id)
     try {

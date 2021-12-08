@@ -49,7 +49,7 @@ export default function Card() {
         </div>
         <div className="vencido">
           <label>Vencido</label>
-          <span>{currencyFormat(valorOverdue)}</span>
+          <span>{currencyFormat(valorOverdue.contasVencidas)}</span>
         </div>
       </div>
     </Container>

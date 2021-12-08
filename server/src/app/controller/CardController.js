@@ -9,7 +9,7 @@ class CardController {
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(404).json({error: 'Erro na busca'});
     }
   }
   // busca total valores vencido CARD
@@ -20,7 +20,7 @@ class CardController {
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(404).json({error: 'Erro na busca'});
     }
   }
   // busca total valores pagas CARD
@@ -31,7 +31,7 @@ class CardController {
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(404).json({error: 'Erro na busca'});
     }
   }
   // busca total valores pendentes CARD
@@ -42,7 +42,7 @@ class CardController {
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(404).json({error: 'Erro na busca'});
     }
   }
 }

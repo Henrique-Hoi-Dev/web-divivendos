@@ -129,7 +129,7 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">{currencyFormat(parcelas.valor)}</TableCell>
                       <TableCell>{parcelas.numero_parcela}</TableCell>
-                      <TableCell align="right" style={{ color: 
+                      <TableCell  align="right" style={{ color: 
                       (parcelas.pago === true && 'green') || 
                       (parcelas.pago === false && 'red') }} >
                       {(parcelas.pago === true && 'Pago') || 
