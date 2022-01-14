@@ -2,32 +2,32 @@ import mongoose from 'mongoose'
 
 const PortionSchema = new mongoose.Schema(
   {
-    accounts_id: {
+    account_id: {
       type: Sequelize.INTEGER,
       references: { model: 'accounts', key: 'id' },
       allowNull: true,
       onUpdate: 'CASCADE',
       onDelete: 'CASCADE',
     },
-    valor: {
-      type: Sequelize.STRING,
+    price: {
+      type: Number,
       allowNull: false,
     },
-    data_vencimento: {
-      type: Sequelize.DATE,
+    date_expired: {
+      type: Date,
       allowNull: false,
     },
-    numero_parcela: {
-      type: Sequelize.DECIMAL,
+    number_portion: {
+      type: Number,
       allowNull: false,
     },
-    pago: {
-      type: Sequelize.BOOLEAN,
+    paid: {
+      type: Boolean,
       allowNull: false,
       defaultValue: false,
     },
     created_at: {
-      type: Sequelize.DATE,
+      type: Date,
       allowNull: false,
     },
   },

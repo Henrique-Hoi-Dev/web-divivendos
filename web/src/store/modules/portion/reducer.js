@@ -3,10 +3,10 @@ import produce from 'immer';
 const INITIAL_STATE = {
   form: {
     id: undefined,
-    valor: '',
-    numero_parcela: '',
-    data_vencimento: '',
-    pago: 'false',
+    price: '',
+    number_portion: '',
+    date_expired: '',
+    paid: 'false',
   }
 };
 
@@ -16,10 +16,10 @@ export default function portion(state = INITIAL_STATE, action) {
       case '@portion/RESET_FORM': {
         draft.form = {
           id: undefined,
-          valor: '',
-          numero_parcela: '',
-          data_vencimento: '',
-          pago: 'false',
+          price: '',
+          number_portion: '',
+          date_expired: '',
+          paid: 'false',
         };
         break;
       }

@@ -79,18 +79,18 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell component="th" scope="row">{row.name}
-          </TableCell>
-          <TableCell align="right">{moment(row.data_vencimento).format('DD/MM/YYYY')}</TableCell>
+          <TableCell component="th" scope="row">{row.name}</TableCell>
+          <TableCell align="right">{moment(row.date_expired).format('DD/MM/YYYY')}</TableCell>
           <TableCell align="right" 
-                    style={{ color: (row.status === 'pendente' && 'red') || 
-                    (row.status === 'pago' && 'green') || 
-                    (row.status === 'cancelado' && 'black')}}
+                    style={{ color: (row.status === 'pending' && 'red') || 
+                    (row.status === 'paid' && 'green') || 
+                    (row.status === 'cencelled' && 'black')}}
         >
-            {(row.status === 'pendente' && 'Pendente') || 
-             (row.status === 'pago' && 'Pago') || 
-             (row.status === 'cancelado' && 'Cancelado')}
+            {(row.status === 'pending' && 'Pendente') || 
+             (row.status === 'paid' && 'Pago') || 
+             (row.status === 'cencelled' && 'Cancelado')}
             </TableCell>
+          <TableCell component="th" scope="row">{currencyFormat(row.total_cost)}</TableCell>
           <TableCell align="right">
             <button>
               <Link to={`/account/${row.id}`}>
@@ -125,27 +125,27 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                  {[].concat(row.parcela).map((parcelas, i) => (
+                  {[].concat(row.portion).map((portions, i) => (
                     <TableRow key={i}>
-                      <TableCell component="th" scope="row">{currencyFormat(parcelas.valor)}</TableCell>
-                      <TableCell>{parcelas.numero_parcela}</TableCell>
+                      <TableCell component="th" scope="row">{currencyFormat(portions.price)}</TableCell>
+                      <TableCell>{portions.number_portion}</TableCell>
                       <TableCell  align="right" style={{ color: 
-                      (parcelas.pago === true && 'green') || 
-                      (parcelas.pago === false && 'red') }} >
-                      {(parcelas.pago === true && 'Pago') || 
-                       (parcelas.pago === false && 'Devendo')}
+                      (portions.paid === true && 'green') || 
+                      (portions.paid === false && 'red') }} >
+                      {(portions.paid === true && 'Pago') || 
+                       (portions.paid === false && 'Devendo')}
                       </TableCell>
-                      <TableCell align="right">{moment(parcelas.data_vencimento).format('DD/MM/YYYY')}</TableCell>
+                      <TableCell align="right">{moment(portions.date_expired).format('DD/MM/YYYY')}</TableCell>
                       <TableCell align="right">
                         <button>
-                          <Link to={`/portion/${parcelas.id}`}>
+                          <Link to={`/portion/${portions.id}`}>
                             <BiEdit />
                           </Link>
                         </button>
                       </TableCell>
                       <TableCell align="right">
                         <button
-                          onClick={(e) => handlerRemovePortion(e, parcelas.id)}>
+                          onClick={(e) => handlerRemovePortion(e, portions.id)}>
                           <FcEmptyTrash />
                         </button>
                       </TableCell>
@@ -176,12 +176,13 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
                     <TableCell>Nome</TableCell>
                     <TableCell align="right">Data Registro</TableCell>
                     <TableCell align="right">Status</TableCell>
+                    <TableCell align="right">Valor total</TableCell>
                     <TableCell align="center">Editar</TableCell>
                     <TableCell align="center">Excluir</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                {[].concat(accountList).map((contas, i) => (
+                {[].concat(accountList.responseData).map((contas, i) => (
                     <Row key={i} row={contas} />
                 ))}
               </TableBody>

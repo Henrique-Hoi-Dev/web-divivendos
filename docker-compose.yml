@@ -1,0 +1,63 @@
+version: '3.7'
+
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: dockerfile
+    volumes:
+      - './web:/app'
+      - '/app/node_modules'
+    ports:
+      - 3000:3000
+    networks:
+      - app-connect
+
+  nodejs:
+    container_name: nodejs
+    build:
+      context: ./server
+      dockerfile: Dockerfile-local
+    command: sh -c "npm run dev"
+    volumes:
+      - .:/home/node/app
+      - /home/node/app/node_modules
+    depends_on:
+      - mongo-db
+    ports:
+      - '3434:3434'
+    networks:
+      - app-connect
+
+  postgre-sql:
+    container_name: postgres-sql
+    image: 'postgres'
+    restart: unless-stopped
+    volumes:
+      - postgres-sql-data:/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    networks:
+      - app-connect
+
+  mongo-db:
+    container_name: mongo-db
+    image: mongo:5.0.3
+    restart: always
+    command: mongod
+    volumes:
+      - mongo-db-data:/data
+    ports:
+      - '27017:27017'
+    networks:
+      - app-connect
+
+volumes:
+  mongo-db-data:
+  postgres-sql-data:
+
+networks:
+  app-connect:
+    driver: bridge

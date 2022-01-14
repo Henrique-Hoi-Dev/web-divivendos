@@ -1,19 +1,16 @@
 import PortionService from '../../service/PortionService'
 
 class PortionController {
-  // create uma nova parcela
   async storePortion(req, res) {
     let response;     
     try {
-      response = await PortionService.storePortion(req.params, req.body);
-      console.log(response)
+      response = await PortionService.store(req.params, req.body);
       return res.status(201).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro em cria uma nova parcela'});
     }
   }
-  // busca conta por Id com todas as parcelas, com soma de todos os valores 
   async getPortionDetailsWithValeuAll(req, res) {
     let response;      
     try {
@@ -21,37 +18,34 @@ class PortionController {
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(400).json({error: 'Erro na busca parcelas'});
     }
   }
-  // busca uma parcela por Id
   async getPortionDetailsId(req, res) {
     let response;      
     try {
-      response = await PortionService.getPortionDetailsId(req.params);
+      response = await PortionService.getId(req.params);
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(400).json({error: 'Erro na busca parcela'});
     }
   }
-  // atualiza parcela por Id
   async updatePortionId(req, res) {
     let response;      
     try {
-      response = await PortionService.updatePortionId(req.params, req.body);
+      response = await PortionService.update(req.params, req.body);
       return res.status(200).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro no atualizar'});
     }
   }
-  // excluir uma parcela por Id
   async deletePortionId(req, res) {
     let response;      
     try {
-      response = await PortionService.deletePortionId(req.params);
-      return res.status(200).send(response);
+      response = await PortionService.destroy(req.params);
+      return res.status(204).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro no excluir'});

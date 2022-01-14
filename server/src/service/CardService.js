@@ -3,7 +3,6 @@ import Portion from "../app/models/Portion";
 import httpStatus from 'http-status-codes';
 
 export default {
-  // busca total valores das contas CARD
   async getCardTotalDetails(req, res) {
     let result = {}
     try {
@@ -11,69 +10,69 @@ export default {
       const valid = accounts.filter(function (result) {
         return result.dataValues;
       });
-      const venci = valid.map(function (result) {
-        const valor = parseInt(result.dataValues.valor);
-        return valor;
+      const resultMap = valid.map(function (result) {
+        const price = parseInt(result.dataValues.price);
+        return price;
       });
-      const totalContas = venci.reduce((acumulado, x) => {
+      const allAccounts = resultMap.reduce((acumulado, x) => {
         return acumulado + x;
       });
       
-      result = {httpStatus: httpStatus.OK, status: "successful", totalContas: totalContas}      
+      result = {httpStatus: httpStatus.OK, status: "successful", allAccounts: allAccounts}      
       return result
     } catch (error) {
-      return res.status(404).json(error)
+      result = {httpStatus: httpStatus.OK, status: "successful", allAccounts: error}      
+      return result
     }
   },
-  // busca total valores pagas CARD
   async getCardPaidDetails(req, res) {
     let result = {}
     try {
       const accounts = await Portion.findAll();
       const valid = accounts.filter(function (result) {
-        if (result.dataValues.pago == true) {
+        if (result.dataValues.paid == true) {
           return result.dataValues;
         }
       });
-      const venci = valid.map(function (result) {
-        const valor = parseInt(result.dataValues.valor);
-        return valor;
+      const resultMap = valid.map(function (result) {
+        const price = parseInt(result.dataValues.price);
+        return price;
       });
-      const totalPagas = venci.reduce((acumulado, x) => {
+      const allpaids = resultMap.reduce((acumulado, x) => {
         return acumulado + x;
       });
   
-      result = {httpStatus: httpStatus.OK, status: "successful", totalPagas: totalPagas}      
+      result = {httpStatus: httpStatus.OK, status: "successful", allpaids: allpaids}      
       return result;
     } catch (error) {
-      return res.status(404).json(error)
+      result = {httpStatus: httpStatus.OK, status: "successful", allpaids: error}      
+      return result;
     }
   },
-  // busca total valores pendente CARD
   async getCardOwingDetails(req, res) {
     let result = {}
     try {
       const accounts = await Portion.findAll();
       const valid = accounts.filter(function (result) {
-        if (result.dataValues.pago == false) {
+        if (result.dataValues.paid == false) {
           return result.dataValues;
         }
       });
-      const venci = valid.map(function (result) {
-        const valor = parseInt(result.dataValues.valor);
-        return valor;
+      const resultMap = valid.map(function (result) {
+        const price = parseInt(result.dataValues.price);
+        return price;
       });
-      const totalPendente = venci.reduce((acumulado, x) => {
+      const allPending = resultMap.reduce((acumulado, x) => {
         return acumulado + x;
       });
 
-      result = {httpStatus: httpStatus.OK, status: "successful", totalPendente: totalPendente}      
+      result = {httpStatus: httpStatus.OK, status: "successful", allPending: allPending}      
       return result
     } catch (error) {
-      return res.status(404).json(error);
+      result = {httpStatus: httpStatus.OK, status: "successful", allPending: error}      
+      return result
     }
   },
-  // busca total valores vencido CARD
   async getCardOverdueDetails(req, res) {
     let result = {}
     try {
@@ -81,37 +80,41 @@ export default {
         include: [
           {
             model: Portion,
-            as: 'parcela',
-            attributes: [ 'accounts_id', 'valor' ]
+            as: 'portion',
+            attributes: [ 'account_id', 'price' ]
           },
         ],
       });
       const dataAtual = new Date();
     
       const valid = accounts.filter(function (result) {
-        const vencido = new Date(result.dataValues.data_vencimento)
-        if (vencido <= dataAtual) {
-          if (result.dataValues.status === 'pendente')
+        const overdue = new Date(result.dataValues.date_expired)
+        if (dataAtual >= overdue) {
+          if (result.dataValues.status === 'pending')
           return result.dataValues;
         }
       });
-      const contasVencidas = valid.map(function (par) {
-        const parcelas = par.dataValues.parcela;
-          const result = parcelas.map(function (valores) {
-            const res = parseInt(valores.dataValues.valor);
-            return res
-          }) 
-            const totalVencidas = result.reduce((acumulado, x) => {    
-              return acumulado + x;
-            });
-            
-            return totalVencidas
+      const overdueAccounts = valid.map(function (par) {
+        const portions = par.dataValues.portion;
+          const result = portions.map(function (value) {
+            const price = parseInt(value.dataValues.price);
+            return price
+          }); 
+          var allValue = result.reduce(acumulado, 0)
+            function acumulado(allValue, itens) {
+              return allValue + itens
+            }     
+            return allValue
       });
-     
-      result = {httpStatus: httpStatus.OK, status: "successful", contasVencidas: contasVencidas}    
+      const allOverdue = overdueAccounts.reduce((acumulado, x) => {
+        return acumulado + x;
+      });
+
+      result = {httpStatus: httpStatus.OK, status: "successful", allOverdue: allOverdue}    
       return result
     } catch (error) {
-      return res.status(404).json(error)
+      result = {httpStatus: httpStatus.OK, status: "successful", allOverdue: error}    
+      return result
     }
   },
 }

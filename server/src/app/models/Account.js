@@ -1,12 +1,17 @@
 import Sequelize, { Model } from 'sequelize';
+import { STATUS } from './StatusEnum';
 
 class Account extends Model {
   static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
-        data_vencimento: Sequelize.DATEONLY,
-        status: Sequelize.ENUM('pendente', 'cancelado', 'pago'),
+        status: {
+          type: String,
+          enum: Object.values(STATUS)
+        },
+        date_expired: Sequelize.DATEONLY,
+        total_cost: Sequelize.DOUBLE,
       },
       {
         sequelize,
@@ -16,7 +21,7 @@ class Account extends Model {
     return this;
   }
   static associate(models) {
-    this.hasMany(models.Portion, { foreignKey: 'accounts_id', as: 'parcela' });
+    this.hasMany(models.Portion, { foreignKey: 'account_id', as: 'portion' });
   }
 }
 

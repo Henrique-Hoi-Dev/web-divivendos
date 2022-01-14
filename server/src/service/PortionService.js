@@ -4,33 +4,33 @@ import Portion from "../app/models/Portion";
 import httpStatus from 'http-status-codes';
 
 export default {
-  // create uma nova parcela
-  async storePortion(req, res) {
-    let accounts_id = req.accounts_id;
-    let { valor, numero_parcela, data_vencimento, pago } = res;
+  async store(req, res) {
+    let result = {}
+    let { price, number_portion, date_expired, paid } = res;
+    let account_id = req.account_id
 
     try {
       const schema = Yup.object().shape({
-        valor: Yup.number().required(),
-        numero_parcela: Yup.number().required(),
+        price: Yup.number().required(),
+        number_portion: Yup.number().required(),
       });
 
       if (!(await schema.isValid(res))) { 
         return res.status(400).json({ error: 'Complete todos os campos' });
       }
 
-      const account = await Account.findByPk(accounts_id);
-
+      const account = await Account.findByPk(account_id);
+     
       if (!account) {
         return res.status(400).json({ error: 'Account not found' });
       }
 
-      const NumeroParcelaExists = await Account.findByPk(accounts_id, {
+      const NumeroParcelaExists = await Account.findByPk(account_id, {
         include: [
           {
             model: Portion,
-            as: 'parcela',
-            where: { numero_parcela: numero_parcela },
+            as: 'portion',
+            where: { number_portion: number_portion },
           },
         ],
       });
@@ -42,91 +42,94 @@ export default {
       }
 
       const portion = await Portion.create({
-        valor,
-        numero_parcela,
-        data_vencimento,
-        pago,
-        accounts_id,
+        price,
+        number_portion,
+        date_expired,
+        paid,
+        account_id,
       });
-
-      return portion;
+      
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: portion}      
+      return result;
     } catch (error) {
-      return res.status(400).json(error);
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result;
     }
   },
-  // busca conta por Id com todas as parcelas, com soma de todos os valores 
   async getPortionDetailsWithValeuAll(req, res) {
-    let id = req.accounts_id;
-    console.log(id)
+    let result = {}
     try {
       const portion = await Portion.findAndCountAll({
-        where: { accounts_id: id },
-        order: [['numero_parcela', 'ASC']],
+        where: { account_id: req.account_id },
+        order: [['number_portion', 'ASC']],
+        include: {
+          model: Account,
+          as: 'account',
+          attributes: ['name', 'date_expired', 'status', 'total_cost']
+        }
       });
 
-      const accounts = await Portion.findAll({ where: { accounts_id: id } });
+      const accounts = await Portion.findAll({ where: { account_id: req.account_id } });
 
       const valid = accounts.filter(function (result) {
         return result.dataValues;
       });
 
-      const venci = valid.map(function (result) {
-        const valor = parseInt(result.dataValues.valor);
-
+      const resultValue = valid.map(function (result) {
+        const valor = parseInt(result.dataValues.price);
         return valor;
       });
 
-      const total = venci.reduce((acumulado, x) => {
+      const total_cost = resultValue.reduce((acumulado, x) => {
         return acumulado + x;
       });
-      return {portion, total};
+
+      result = {httpStatus: httpStatus.OK, status: "successful", portion, total_cost}      
+      return result;
     } catch (error) {
-      return res.status(400).json(error);
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result;
     }
   },
-  // busca uma parcela por Id
-  async getPortionDetailsId(req, res) {
-    let id = req.id;
-
+  async getId(req, res) {
+    let result = {}
     try {
-      let parcela = await Portion.findByPk(id);
+      let portion = await Portion.findByPk(req.id);
 
-      return parcela;
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: portion}      
+      return result;
     } catch (error) {
-      return res.status(400).json(error);
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result;
     }
   },
-  // atualiza parcela por Id
-  async updatePortionId(req, res) {
-    let id = req.id;
-    let body = res
-
+  async update(req, res) {
+    let result = {}
     try {
       const schema = Yup.object().shape({
-        valor: Yup.string().required(),
+        price: Yup.number().required(),
       });
 
-      if (!(await schema.isValid(body))) {
+      if (!(await schema.isValid(res))) {
         return res.status(400).json({ error: 'Validation failed' });
       }
-      const portion = await Portion.findByPk(id);
+      const portion = await Portion.findByPk(req.id);
 
-      await portion.update(body);
+      await portion.update(res);
 
-      return portion;
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: portion}      
+      return result;
     } catch (error) {
-      return res.status(400).json({ error: 'Erro...' });
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result;
     }
   },
-  // excluir uma parcela por Id
-  async deletePortionId(req, res) {
-    let id = req.id;
+  async destroy(req, res) {
     let result = {}
-
     try { 
       const portion = await Portion.destroy({
         where: {
-          id: id,
+          id: req.id,
         },
       });
 
@@ -137,8 +140,8 @@ export default {
       result = {httpStatus: httpStatus.OK, status: "successful", responseData: portion}      
       return result;
     } catch (error) {
-      console.log(error);
-      return res.status(400).json(error.message);
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result
     }
   }
 }

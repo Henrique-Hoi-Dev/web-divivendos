@@ -18,7 +18,8 @@ import {
 export default function RegistrationAccounts() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { form } = useSelector((state) => state.account);
+  const { responseData } = useSelector((state) => state.account.form);
+  console.log(responseData)
   
   useEffect(() => {
     if (id) {
@@ -50,7 +51,7 @@ export default function RegistrationAccounts() {
     <Container>
       <Header title="Registro/Editar Dívidendos"/>
       <div className="header-main">
-        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form}>
+        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={responseData}>
             <Form className="form-input">
               <div id="container-input" className="header-title">
 
@@ -60,9 +61,9 @@ export default function RegistrationAccounts() {
                     name="name" 
                     placeholder="nome conta" />
 
-                  <label htmlFor="data_vencimento">Data vencimento</label>
+                  <label htmlFor="date_expired">Data vencimento</label>
                   <Field 
-                    name="data_vencimento" 
+                    name="date_expired" 
                     type="date" 
                     placeholder="data vencimento"
                     />
@@ -72,10 +73,22 @@ export default function RegistrationAccounts() {
                 <div className="campo2">
                   <label htmlFor="status">Status</label>
                   <Field component="select" id="location" name="status">
-                    <option value="pendente">Pendente</option>
-                    <option value="cancelado">Cancelado</option>
-                    <option value="pago">Pago</option>
+                    <option value="pending">Pendente</option>
+                    <option value="paid">Pago</option>
+                    <option value="cencelled">Cancelado</option>
                   </Field>
+                  <label htmlFor="total_cost">Valor Total</label>
+                  <Field 
+                    name="total_cost"
+                    type="number" />
+                </div> 
+
+                <footer className="footer">
+                  <p>
+                    <FcHighPriority />
+                    Importante! <br />
+                    Preencha todos os dados
+                  </p>
                   <div className="buttons-container">
                     <button>
                       <Link style={renderButton} to={`/registrePortion/${id}`}>
@@ -84,14 +97,6 @@ export default function RegistrationAccounts() {
                     </button>
                     <button type="submit">Salvar</button>
                   </div>
-                </div> 
-
-                <footer className="footer">
-                    <p>
-                      <FcHighPriority />
-                      Importante! <br />
-                      Preencha todos os dados
-                    </p>
                 </footer>
               </div>
             </Form>

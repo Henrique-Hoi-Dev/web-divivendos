@@ -7,26 +7,26 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      accounts_id: {
+      account_id: {
         type: Sequelize.INTEGER,
         references: { model: 'accounts', key: 'id' },
         allowNull: true,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      valor: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
+      price: {
+        type: Sequelize.DOUBLE,
+        defaultValue: 0,
       },
-      numero_parcela: {
+      number_portion: {
         type: Sequelize.DECIMAL,
-        allowNull: false,
+        defaultValue: 0,
       },
-      data_vencimento: {
+      date_expired: {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      pago: {
+      paid: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,

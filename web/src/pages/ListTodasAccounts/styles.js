@@ -82,7 +82,12 @@ export const Container = styled.div`
       }  
     }
   }
-
+  .MuiTableCell-root {
+    border-bottom: none;
+  }
+  .MuiTableCell-alignRight {
+    text-align: inherit;
+  }
   .MuiTypography-gutterBottom {
     font-weight: 700;
   }

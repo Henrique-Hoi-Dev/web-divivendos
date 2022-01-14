@@ -3,84 +3,92 @@ import Portion from "../app/models/Portion";
 import httpStatus from 'http-status-codes';
 
 export default {
-  // create uma nova conta
-  async storeAccount(req, res) {
-    let propsAccount = req
+  async store(req, res) {
+    let result = {}
     try {
-      const createAccounts = await Account.create(propsAccount)
+      const createAccounts = await Account.create(req)
 
-      return createAccounts;
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: createAccounts}      
+      return result
     } catch (error) {
-      return res.status(400).json(error)
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result
     }
   }, 
-  // busca todas as accounts
-  async getAccountDetails(req, res) {
+  async index(req, res) {
+    let result = {}
     try {
       const account = await Account.findAll({
-        order: [['data_vencimento', 'ASC']],
+        order: [['date_expired', 'ASC']],
         include: [
           {
             model: Portion,
-            as: 'parcela',
-            order: [['numero_parcela', 'ASC']],
+            as: 'portion',
+            order: [['number_portion', 'ASC']],
             separate: true,
-            attributes: [ 'id', 'accounts_id', 'valor', 'numero_parcela', 
-                          'data_vencimento', 'pago' ],
+            attributes: [ 'id', 'account_id', 'price', 'number_portion', 
+                          'date_expired', 'paid' ],
           },
         ],
       });
 
-      return account;
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: account}      
+      return result
     } catch (error) {
-      return res.status(400).json(error)
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result
     }
   },
-  // busca uma conta por Id
-  async getAccountDetailsId(req, res) {
-    let id = req.id
-    try {
-
-      let account = await Account.findByPk(id, {
-        include: [
-          {
-            model: Portion,
-            as: 'parcela',
-            order: [['numero_parcela', 'ASC']],
-            separate: true,
-            attributes: [ 'id', 'accounts_id', 'valor', 'numero_parcela',
-                          'data_vencimento', 'pago'],
-          },
-        ],
-      });
-
-      return account;
-    } catch (error) {
-      return res.status(400).json(error)
-    }
-  },
-  // atualiza conta por Id
-  async updateAccountId(req, res){
-    let id = req.id
-    let body = res
-    try {
-      const account = await Account.findByPk(id);
-
-      await account.update(body);
-
-      return account;
-    } catch (error) {
-      return res.status(400).json(error);
-    }
-  },
-  // excluir uma conta por Id
-  async deleteAccountId(req, res) {
+  async getId(req, res) {
     let result = {}
-    let id = req.id
+    try {
+      let account = await Account.findByPk(req.id, {
+        include: [
+          {
+            model: Portion,
+            as: 'portion',
+            order: [['number_portion', 'ASC']],
+            separate: true,
+            attributes: [ 'id', 'account_id', 'price', 'number_portion', 
+                          'date_expired', 'paid' ],
+          },
+        ],
+      });
+
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: account}      
+      return result
+    } catch (error) {
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result
+    }
+  },
+  async update(req, res){
+    let result = {}
+    try {
+      const account = await Account.findByPk(req.id, { 
+        include: {
+            model: Portion,
+            as: 'portion',
+            order: [['number_portion', 'ASC']],
+            separate: true,
+          },
+      });
+
+      await account.update(res);
+
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: account}      
+      return result
+    } catch (error) {
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result
+    }
+  },
+  async destroy(req, res) {
+    let result = {}
     try {
       const account = await Account.destroy({
         where: {
-          id: id,
+          id: req.id,
         },
       });
 
@@ -91,8 +99,8 @@ export default {
       result = {httpStatus: httpStatus.OK, status: "successful", responseData: account}      
       return result
     } catch (error) {
-      console.log(error);
-      return res.status(400).json(error.message);
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      
+      return result
     }
   },
 }

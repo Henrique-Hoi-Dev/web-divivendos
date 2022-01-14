@@ -37,19 +37,19 @@ export default function Card() {
       <div className="card">
         <div className="total">
           <label>Total</label>
-          <span>{currencyFormat(valorTotal.totalContas)}</span>
+          <span>{currencyFormat(valorTotal.allAccounts)}</span>
         </div>
         <div className="pago">
           <label>Pago</label>
-          <span>{currencyFormat(valorPaid.totalPagas)}</span>
+          <span>{currencyFormat(valorPaid.allpaids)}</span>
         </div>
         <div className="pendente">
           <label>Devedor</label>
-          <span>{currencyFormat(-valorOwing.totalPendente)}</span>
+          <span>{currencyFormat(-valorOwing.allPending)}</span>
         </div>
         <div className="vencido">
           <label>Vencido</label>
-          <span>{currencyFormat(valorOverdue.contasVencidas)}</span>
+          <span>{currencyFormat(valorOverdue.allOverdue)}</span>
         </div>
       </div>
     </Container>

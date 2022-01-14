@@ -1,19 +1,25 @@
 import mongoose from 'mongoose'
+import { STATUS } from '../models/StatusEnum';
 
 const AccountSchema = new mongoose.Schema(
   {
     name: {
-      type: Sequelize.STRING,
+      type: String,
       allowNull: false,
     },
-    data_vencimento: {
-      type: Sequelize.DATE,
+    date_expired: {
+      type: Date,
       allowNull: false,
     },
     status: {
-      type: Sequelize.ENUM,
-      values: ['pendente', 'cancelado', 'pago'],
-      defaultValue: 'pendente',
+      type: String,
+      enum: Object.values(STATUS),
+      defaultValue: 'pending',
+    },
+    total_cost: {
+      type: Number,
+      allowNull: false,
+      defaultValue: 0
     },
     created_at: {
       type: Sequelize.DATE,

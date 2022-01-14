@@ -2,7 +2,7 @@ import { takeLatest, call, all, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import history from '~/services/history';
-import api from '~/services/api2';
+import api from '~/services/api';
 
 import {
   findAllAccountSuccess,
@@ -12,7 +12,7 @@ import {
 
 export function* createAccount({ payload }) {
   try {
-    const result = yield call(api.post, '/account/new', payload.values);
+    const result = yield call(api.post, '/account', payload.values);
 
     toast.success('Conta salva com sucesso.');
     history.push(`/registrePortion/${result.data.id}`)
@@ -35,7 +35,7 @@ export function* findAllAccount() {
 
 export function* getByIdAccount({ payload }) {
   try {
-    const response = yield call(api.get, `/account/${payload.data}`);
+    const response = yield call(api.get, `/portions/${payload.data}`);
 
     yield put(getByIdAccountSuccess(response.data));
   } catch (err) {
@@ -63,7 +63,7 @@ export function* deleteAccount({ payload }) {
   try {
     yield call(api.delete, `/account/${payload.data}`);
 
-    const response = yield call(api.get, '/accounts');
+    const response = yield call(api.get, '/account');
 
     yield put(findAllAccountSuccess(response.data));
     toast.success('Dívidendo deletado');
@@ -77,7 +77,7 @@ export function* deletePortionTotal({ payload }) {
   try {
     yield call(api.delete, `/portion/${payload.data}`);
 
-    const response = yield call(api.get, '/accounts');
+    const response = yield call(api.get, '/account');
 
     yield put(findAllAccountSuccess(response.data));
     toast.success('Parcela deletada');

@@ -10,7 +10,7 @@ export const Container = styled.div`
     margin-left: 160px;
     margin-bottom: 25px;
 
-    .total {
+    .total, .pendente, .pago, .vencido  {
       background: #4d4c4c;
       padding: 6px;
       border-radius: 8px;
@@ -23,46 +23,24 @@ export const Container = styled.div`
         font-weight: 700;
         color: grey;
       }
+      span {
+        margin-top: 5px
+      }
     }
     .pendente {
-      background: #4d4c4c;
-      padding: 6px;
-      border-radius: 8px;
-      margin-right: 9px;
-      display: flex;
-      flex-direction: column;
-      min-width: 90px;
-
       label {
-        font-weight: 700;
         color: red;
       }
     }
     .pago {
-      background: #4d4c4c;
-      padding: 6px;
-      border-radius: 8px;
-      margin-right: 9px;
-      display: flex;
-      flex-direction: column;
-      min-width: 90px;
-
       label {
-        font-weight: 700;
         color: green;
       }
     }
     .vencido {
-      background: #4d4c4c;
-      padding: 6px;
-      border-radius: 8px;
-      margin-right: 9px;
-      display: flex;
-      flex-direction: column;
-      min-width: 90px;
-
       label {
         font-weight: 700;
+        color: black;
       }
     }
   }

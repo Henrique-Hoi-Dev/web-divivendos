@@ -1,7 +1,6 @@
 import CardService from '../../service/CardService'
 
 class CardController {
-  // busca total valores das contas CARD
   async getCardTotalDetails(req, res) {
     let response;      
     try {
@@ -12,7 +11,6 @@ class CardController {
       return res.status(404).json({error: 'Erro na busca'});
     }
   }
-  // busca total valores vencido CARD
   async getCardOverdueDetails(req, res) {
     let response;      
     try {
@@ -23,7 +21,6 @@ class CardController {
       return res.status(404).json({error: 'Erro na busca'});
     }
   }
-  // busca total valores pagas CARD
   async getCardPaidDetails(req, res) {
     let response;      
     try {
@@ -34,7 +31,6 @@ class CardController {
       return res.status(404).json({error: 'Erro na busca'});
     }
   }
-  // busca total valores pendentes CARD
   async getCardOwingDetails(req, res) {
     let response;      
     try {

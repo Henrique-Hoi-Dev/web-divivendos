@@ -1,56 +1,51 @@
 import AccoutService from '../../service/AccoutService'
 
 class AccountController {
-  // create uma nova conta
   async storeAccount(req, res) {
     let response;     
     try {
-      response = await AccoutService.storeAccount(req.body);
+      response = await AccoutService.store(req.body);
       return res.status(201).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro em cria uma nova conta'});
     }
   }
-  // busca todas as accounts
   async getAccountDetails(req, res) {
     let response;      
     try {
-      response = await AccoutService.getAccountDetails();
+      response = await AccoutService.index();
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(400).json({error: 'Erro na busca todas as dividas'});
     }
   }
-  // busca uma conta por Id
   async getAccountDetailsId(req, res) {
     let response;      
     try {
-      response = await AccoutService.getAccountDetailsId(req.params);
+      response = await AccoutService.getId(req.params);
       return res.status(200).send(response);
         
     } catch (error) {
-      return res.status(400).json({error: 'Erro na busca'});
+      return res.status(400).json({error: 'Erro na busca de uma divida'});
     }
   }
-  // atualiza conta por Id
   async updateAccountId(req, res) {
     let response;      
     try {
-      response = await AccoutService.updateAccountId(req.params, req.body);
+      response = await AccoutService.update(req.params, req.body);
       return res.status(200).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro no atualizar'});
     }
   }
-  // excluir uma conta por Id
   async deleteAccountId(req, res) {
     let response;      
     try {
-      response = await AccoutService.deleteAccountId(req.params);
-      return res.status(200).send(response);
+      response = await AccoutService.destroy(req.params);
+      return res.status(204).send(response);
         
     } catch (error) {
       return res.status(400).json({error: 'Erro no excluir'});

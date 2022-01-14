@@ -15,24 +15,25 @@ import {
   resetFormulario,
   UpdatePortionRequest } from '~/store/modules/portion/actions';
 
-export default function RegistrationPortion(props) {
+export default function RegistrationPortion() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const  { form }  = useSelector((state) => state.portion);
+  console.log(form)
   
   useEffect(() => {
-    if (props.match.path === '/portion/:id') {
+    if (id) {
       dispatch(getByIdPortionRequest(id));
     } else {
       dispatch(resetFormulario());
     }
-  }, [props.match.path, id, dispatch]);
+  }, [id, dispatch]);
 
   const handleSubmit = async (values) => {
     try {
       let body = JSON.parse(JSON.stringify(values));
 
-      if (form.numero_parcela) {
+      if (form.responseData.number_portion) {
         dispatch(UpdatePortionRequest({ id: id , values: body}));
       } else {
         dispatch(createPortionRequest(values, id));
@@ -46,28 +47,28 @@ export default function RegistrationPortion(props) {
     <Container>
       <Header title="Registro/Editar Parcelas"/>
       <div className="header-main">
-        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form} >
+        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form.responseData} >
             <Form className="form-input">
               <div id="container-input" className="header-title">
 
                 <div className="campo1">
-                  <label htmlFor="valor">Valor Parcela</label>
+                  <label htmlFor="price">Valor Parcela</label>
                   <Field 
-                    name="valor" 
+                    name="price" 
                     placeholder="valor" />
-                  <label htmlFor="numero_parcela">Número Parcela</label>
+                  <label htmlFor="number_portion">Número Parcela</label>
                   <Field 
-                    name="numero_parcela" 
+                    name="number_portion" 
                     placeholder="numero" />
                 </div>
 
                 <div className="campo2">
-                  <label htmlFor="data_vencimento">Data vencimento</label>
+                  <label htmlFor="date_expired">Data vencimento</label>
                   <Field 
-                    name="data_vencimento" 
+                    name="date_expired" 
                     type="date" /> 
-                  <label htmlFor="pago">Status</label>
-                  <Field component="select" id="location" name="pago">
+                  <label htmlFor="paid">Status</label>
+                  <Field component="select" id="location" name="paid">
                     <option value="false">Devendo</option>
                     <option value="true">Pago</option>
                   </Field>

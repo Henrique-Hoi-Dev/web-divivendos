@@ -86,6 +86,10 @@ export const Container = styled.div`
       align-items: flex-start;
       margin-left: 70px;
 
+    }
+    .footer {
+      grid-area: footer;
+      
       .buttons-container {
         margin-top: 10px;
 
@@ -94,9 +98,6 @@ export const Container = styled.div`
           text-decoration: none;
         }
       }
-    }
-    .footer {
-      grid-area: footer;
     }  
 
     label {

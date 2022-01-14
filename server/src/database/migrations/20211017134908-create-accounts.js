@@ -11,14 +11,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      data_vencimento: {
+      status: {
+        type: Sequelize.ENUM,
+        values: ['pending', 'paid', 'cencelled'],
+        defaultValue: 'pending'
+      },
+      date_expired: {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      status: {
-        type: Sequelize.ENUM,
-        values: ['pendente', 'cancelado', 'pago'],
-        defaultValue: 'pendente'
+      total_cost: {
+        type: Sequelize.DOUBLE,
+        defaultValue: 0,
       },
       created_at: {
         type: Sequelize.DATE,

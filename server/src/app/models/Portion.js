@@ -4,11 +4,11 @@ class Portion extends Model {
   static init(sequelize) {
     super.init(
       {
-        accounts_id: Sequelize.INTEGER,
-        valor: Sequelize.DECIMAL,
-        numero_parcela: Sequelize.DECIMAL,
-        data_vencimento: Sequelize.DATEONLY,
-        pago: Sequelize.BOOLEAN,
+        account_id: Sequelize.INTEGER,
+        price: Sequelize.DOUBLE,
+        number_portion: Sequelize.DECIMAL,
+        date_expired: Sequelize.DATEONLY,
+        paid: Sequelize.BOOLEAN,
       },
       {
         sequelize,
@@ -18,7 +18,7 @@ class Portion extends Model {
     return this;
   }
   static associate(models) {
-    this.belongsTo(models.Account, { foreignKey: 'accounts_id', as: 'account' });
+    this.belongsTo(models.Account, { foreignKey: 'account_id', as: 'account' });
   }
 }
 

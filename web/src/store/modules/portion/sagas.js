@@ -2,7 +2,7 @@ import { takeLatest, call, all, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 
 import history from '~/services/history';
-import api from '~/services/api2';
+import api from '~/services/api';
 
 import {
   getByIdPortionSuccess,
@@ -12,7 +12,7 @@ import {
 
 export function* createPortion({ payload }) {
   try {
-    yield call(api.post, `/account/${payload.id}/portion`, payload.values);
+    yield call(api.post, `/portion/${payload.id}`, payload.values);
 
     toast.success('Parcela salva com sucesso.');
   } catch (err) {
@@ -33,6 +33,7 @@ export function* getByIdPortion({ payload }) {
 }
 
 export function* UpdatePortion({ payload }) {
+  console.log(payload)
   try {
     const response = yield call(api.put, `/portion/${payload.data.id}`, payload.data.values);
 
