@@ -19,6 +19,20 @@ export function getByIdPortionSuccess(data) {
   };
 }
 
+export function getByIdPortionAllValueRequest(data) {
+  return {
+    type: '@portion/GET_BYID_PORTION_ALL_VALUE_REQUEST',
+    payload: { data },
+  };
+}
+
+export function getByIdPortionAllValueSuccess(data) {
+  return {
+    type: '@portion/GET_BYID_PORTION_ALL_VALUE_SUCCESS',
+    payload: { data },
+  };
+}
+
 export function UpdatePortionRequest(data) {
   return {
     type: '@portion/UPDATE_PORTION_REQUEST',

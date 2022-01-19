@@ -14,22 +14,26 @@ import {
   getByIdAccountRequest,
   resetFormulario,
   UpdateAccountRequest } from '~/store/modules/account/actions';
+import { getByIdPortionAllValueRequest } from '~/store/modules/portion/actions';
 
 export default function RegistrationAccounts() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { responseData } = useSelector((state) => state.account.form);
-  console.log(responseData)
+  const { form } = useSelector((state) => state.account);
+  const { total } = useSelector((state) => state.portion.form);
+  console.log(total, form)
   
   useEffect(() => {
     if (id) {
       dispatch(getByIdAccountRequest(id));
+      dispatch(getByIdPortionAllValueRequest(id));
     } else {
       dispatch(resetFormulario());
     }
   }, [id, dispatch]);
 
   const handleSubmit = async (values) => {
+    console.log(values)
     try {
       let body = JSON.parse(JSON.stringify(values));
 
@@ -51,25 +55,17 @@ export default function RegistrationAccounts() {
     <Container>
       <Header title="Registro/Editar Dívidendos"/>
       <div className="header-main">
-        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={responseData}>
+        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form.responseData || form}>
             <Form className="form-input">
               <div id="container-input" className="header-title">
 
                 <div className="campo1">
                   <label htmlFor="name">Conta</label>
-                  <Field 
-                    name="name" 
-                    placeholder="nome conta" />
-
+                  <Field name="name" placeholder="nome conta" />
                   <label htmlFor="date_expired">Data vencimento</label>
-                  <Field 
-                    name="date_expired" 
-                    type="date" 
-                    placeholder="data vencimento"
-                    />
-                    
-                  
+                  <Field name="date_expired" type="date" />
                 </div>
+
                 <div className="campo2">
                   <label htmlFor="status">Status</label>
                   <Field component="select" id="location" name="status">
@@ -78,9 +74,7 @@ export default function RegistrationAccounts() {
                     <option value="cencelled">Cancelado</option>
                   </Field>
                   <label htmlFor="total_cost">Valor Total</label>
-                  <Field 
-                    name="total_cost"
-                    type="number" />
+                  <Field name="total_cost" value={total} placeholder="valor total"/>
                 </div> 
 
                 <footer className="footer">

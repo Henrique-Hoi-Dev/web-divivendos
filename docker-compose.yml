@@ -4,7 +4,8 @@ services:
   web:
     build:
       context: ./web
-      dockerfile: dockerfile
+      dockerfile: Dockerfile
+    stdin_open: true
     volumes:
       - './web:/app'
       - '/app/node_modules'
@@ -18,14 +19,15 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile-local
-    command: sh -c "npm run dev"
+    command: sh -c "npm run migrate && npm run seed && npm start"
     volumes:
       - .:/home/node/app
       - /home/node/app/node_modules
     depends_on:
+      - postgre-sql
       - mongo-db
     ports:
-      - '3434:3434'
+      - '3333:3333'
     networks:
       - app-connect
 

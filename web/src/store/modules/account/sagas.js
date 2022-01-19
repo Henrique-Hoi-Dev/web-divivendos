@@ -15,7 +15,7 @@ export function* createAccount({ payload }) {
     const result = yield call(api.post, '/account', payload.values);
 
     toast.success('Conta salva com sucesso.');
-    history.push(`/registrePortion/${result.data.id}`)
+    yield history.push(`/registrePortion/${result.data.responseData.id}`)
   } catch (err) {
     yield put(accountFailure());
     toast.error('Error salvar conta.');
@@ -35,7 +35,7 @@ export function* findAllAccount() {
 
 export function* getByIdAccount({ payload }) {
   try {
-    const response = yield call(api.get, `/portions/${payload.data}`);
+    const response = yield call(api.get, `/account/${payload.data}`);
 
     yield put(getByIdAccountSuccess(response.data));
   } catch (err) {
@@ -63,7 +63,7 @@ export function* deleteAccount({ payload }) {
   try {
     yield call(api.delete, `/account/${payload.data}`);
 
-    const response = yield call(api.get, '/account');
+    const response = yield call(api.get, '/accounts');
 
     yield put(findAllAccountSuccess(response.data));
     toast.success('Dívidendo deletado');
@@ -73,67 +73,11 @@ export function* deleteAccount({ payload }) {
   }
 }
 
-export function* deletePortionTotal({ payload }) {
+export function* deletePortion({ payload }) {
   try {
     yield call(api.delete, `/portion/${payload.data}`);
 
-    const response = yield call(api.get, '/account');
-
-    yield put(findAllAccountSuccess(response.data));
-    toast.success('Parcela deletada');
-  } catch (err) {
-    toast.error('Erro em excluir parcela');
-    yield put(accountFailure());
-  }
-}
-
-export function* deletePortionPaid({ payload }) {
-  try {
-    yield call(api.delete, `/portion/${payload.data}`);
-
-    const response = yield call(api.get, '/paidAccount');
-
-    yield put(findAllAccountSuccess(response.data));
-    toast.success('Parcela deletada');
-  } catch (err) {
-    toast.error('Erro em excluir parcela');
-    yield put(accountFailure());
-  }
-}
-
-export function* deletePortionOverdue({ payload }) {
-  try {
-    yield call(api.delete, `/portion/${payload.data}`);
-
-    const response = yield call(api.get, '/overdues');
-
-    yield put(findAllAccountSuccess(response.data));
-    toast.success('Parcela deletada');
-  } catch (err) {
-    toast.error('Erro em excluir parcela');
-    yield put(accountFailure());
-  }
-}
-
-export function* deletePortionPending({ payload }) {
-  try {
-    yield call(api.delete, `/portion/${payload.data}`);
-
-    const response = yield call(api.get, '/pendingAccount');
-
-    yield put(findAllAccountSuccess(response.data));
-    toast.success('Parcela deletada');
-  } catch (err) {
-    toast.error('Erro em excluir parcela');
-    yield put(accountFailure());
-  }
-}
-
-export function* deletePortionCancel({ payload }) {
-  try {
-    yield call(api.delete, `/portion/${payload.data}`);
-
-    const response = yield call(api.get, '/cancelAccount');
+    const response = yield call(api.get, '/accounts');
 
     yield put(findAllAccountSuccess(response.data));
     toast.success('Parcela deletada');
@@ -149,9 +93,5 @@ export default all([
   takeLatest('@account/GET_BYID_ACCOUNT_REQUEST', getByIdAccount),
   takeLatest('@account/UPDATE_ACCOUNT_REQUEST', UpdateAccount),
   takeLatest('@account/DELETE_ACCOUNT_REQUEST', deleteAccount),
-  takeLatest('@account/DELETE_PORTION_TOTAL_REQUEST', deletePortionTotal),
-  takeLatest('@account/DELETE_PORTION_PAID_REQUEST', deletePortionPaid),
-  takeLatest('@account/DELETE_PORTION_PENDING_REQUEST', deletePortionPending),
-  takeLatest('@account/DELETE_PORTION_CANCEL_REQUEST', deletePortionCancel),
-  takeLatest('@account/DELETE_PORTION_OVERDUE_REQUEST', deletePortionOverdue),
+  takeLatest('@account/DELETE_PORTION_REQUEST', deletePortion),
 ]);

@@ -27,6 +27,10 @@ export default function portion(state = INITIAL_STATE, action) {
         draft.form = action.payload.data;
         break;
       }
+      case '@portion/GET_BYID_PORTION_ALL_VALUE_SUCCESS': {
+        draft.form = action.payload.data;
+        break;
+      }
       default:
     }
   });

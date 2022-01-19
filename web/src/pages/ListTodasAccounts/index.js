@@ -25,7 +25,7 @@ import { connect, useDispatch } from 'react-redux';
 import {
   findAllAccountRequest,
   deleteAccountRequest,
-  deletePortionTotalRequest
+  deletePortionRequest
 } from '../../store/modules/account/actions';
 
 import { Container } from './styles';
@@ -42,7 +42,7 @@ const useRowStyles = makeStyles({
 
 const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePortion }) => {
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     function onLoad() {
       dispatch(findAllAccountRequest());
@@ -65,11 +65,12 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const wrapper = React.createRef();
     const classes = useRowStyles();
   
     return (
-      <React.Fragment>
-        <TableRow className={classes.root}>
+      <React.Fragment >
+        <TableRow className={classes.root} ref={wrapper}>
           <TableCell>
             <IconButton
               aria-label="expand row"
@@ -182,7 +183,7 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                {[].concat(accountList.responseData).map((contas, i) => (
+                {[].concat(accountList).map((contas, i) => (
                     <Row key={i} row={contas} />
                 ))}
               </TableBody>
@@ -196,7 +197,7 @@ const ListTodasAccounts = ({ accountList, handlerRemoveAccount, handlerRemovePor
 
 const mapStateToProps = (state) => {
   return {
-    accountList: state.account.accountList ? state.account.accountList : [],
+    accountList: state.account.accountList.responseData ? state.account.accountList.responseData : [],
   };
 };
 
@@ -217,7 +218,7 @@ const mapDispatchToProps = (dispatch) => {
         'Tem certeza que deseja remover esse parcela?'
       );
       if (confirm) {
-        dispatch(deletePortionTotalRequest(id));
+        dispatch(deletePortionRequest(id));
       }
     },
   };

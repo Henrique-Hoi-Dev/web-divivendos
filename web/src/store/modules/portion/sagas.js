@@ -6,6 +6,7 @@ import api from '~/services/api';
 
 import {
   getByIdPortionSuccess,
+  getByIdPortionAllValueSuccess,
   UpdatePortionSuccess, 
   portionFailure
 } from './actions';
@@ -27,13 +28,23 @@ export function* getByIdPortion({ payload }) {
 
     yield put(getByIdPortionSuccess(response.data));
   } catch (err) {
-    toast.error('Error no encontra conta.');
+    toast.error('Error no encontrar parcela.');
+    yield put(portionFailure());
+  }
+}
+
+export function* getByIdPortionValueAll({ payload }) {
+  try {
+    const response = yield call(api.get, `/portions/${payload.data}`);
+
+    yield put(getByIdPortionAllValueSuccess(response.data));
+  } catch (err) {
+    toast.error('Error no encontrar parcela.');
     yield put(portionFailure());
   }
 }
 
 export function* UpdatePortion({ payload }) {
-  console.log(payload)
   try {
     const response = yield call(api.put, `/portion/${payload.data.id}`, payload.data.values);
 
@@ -48,6 +59,7 @@ export function* UpdatePortion({ payload }) {
 
 export default all([
   takeLatest('@portion/CREATE_PORTION_REQUEST', createPortion),
+  takeLatest('@portion/GET_BYID_PORTION_ALL_VALUE_REQUEST', getByIdPortionValueAll),
   takeLatest('@portion/GET_BYID_PORTION_REQUEST', getByIdPortion),
   takeLatest('@portion/UPDATE_PORTION_REQUEST', UpdatePortion),
 ]);

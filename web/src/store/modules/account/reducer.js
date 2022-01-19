@@ -5,8 +5,9 @@ const INITIAL_STATE = {
   form: {
     id: undefined,
     name: '',
-    data_vencimento: '',
-    status: 'pendente',
+    date_expired: '',
+    total_cost: '',
+    status: 'pending',
   }
 };
 
@@ -14,11 +15,12 @@ export default function account(state = INITIAL_STATE, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case '@account/RESET_FORM': {
-        draft.form = {
+        draft.form   = {
           id: undefined,
           name: '',
-          data_vencimento: '',
-          status: 'pendente',
+          date_expired: '',
+          total_cost: '',
+          status: 'pending',
         };
         break;
       }

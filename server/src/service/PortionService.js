@@ -80,11 +80,11 @@ export default {
         return valor;
       });
 
-      const total_cost = resultValue.reduce((acumulado, x) => {
+      const total = resultValue.reduce((acumulado, x) => {
         return acumulado + x;
       });
 
-      result = {httpStatus: httpStatus.OK, status: "successful", portion, total_cost}      
+      result = {httpStatus: httpStatus.OK, status: "successful", portion, total}      
       return result;
     } catch (error) {
       result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      

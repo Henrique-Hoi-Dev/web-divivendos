@@ -54,40 +54,12 @@ export function deleteAccountRequest(data) {
   };
 }
 
-export function deletePortionTotalRequest(data) {
+export function deletePortionRequest(data) {
   return {
-    type: '@account/DELETE_PORTION_TOTAL_REQUEST',
+    type: '@account/DELETE_PORTION_REQUEST',
     payload: { data },
   };
 
-}
-
-export function deletePortionPaidRequest(data) {
-  return {
-    type: '@account/DELETE_PORTION_PAID_REQUEST',
-    payload: { data },
-  };
-}
-
-export function deletePortionOverdueRequest(data) {
-  return {
-    type: '@account/DELETE_PORTION_OVERDUE_REQUEST',
-    payload: { data },
-  };
-}
-
-export function deletePortionPendingRequest(data) {
-  return {
-    type: '@account/DELETE_PORTION_PENDING_REQUEST',
-    payload: { data },
-  };
-}
-
-export function deletePortionCancelRequest(data) {
-  return {
-    type: '@account/DELETE_PORTION_CANCEL_REQUEST',
-    payload: { data },
-  };
 }
 
 export function accountFailure() {
