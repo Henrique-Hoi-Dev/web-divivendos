@@ -6,12 +6,12 @@ export default {
   async getCardTotalDetails(req, res) {
     let result = {}
     try {
-      const accounts = await Portion.findAll();
+      const accounts = await Account.findAll();
       const valid = accounts.filter(function (result) {
         return result.dataValues;
       });
       const resultMap = valid.map(function (result) {
-        const price = parseInt(result.dataValues.price);
+        const price = parseInt(result.dataValues.total_cost);
         return price;
       });
       const allAccounts = resultMap.reduce((acumulado, x) => {

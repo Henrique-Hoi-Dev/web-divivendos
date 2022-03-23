@@ -62,11 +62,6 @@ export default {
       const portion = await Portion.findAndCountAll({
         where: { account_id: req.account_id },
         order: [['number_portion', 'ASC']],
-        include: {
-          model: Account,
-          as: 'account',
-          attributes: ['name', 'date_expired', 'status', 'total_cost']
-        }
       });
 
       const accounts = await Portion.findAll({ where: { account_id: req.account_id } });

@@ -6,7 +6,7 @@ const INITIAL_STATE = {
     id: undefined,
     name: '',
     date_expired: '',
-    total_cost: '',
+    total_cost: 0,
     status: 'pending',
   }
 };
@@ -19,7 +19,7 @@ export default function account(state = INITIAL_STATE, action) {
           id: undefined,
           name: '',
           date_expired: '',
-          total_cost: '',
+          total_cost: 0,
           status: 'pending',
         };
         break;

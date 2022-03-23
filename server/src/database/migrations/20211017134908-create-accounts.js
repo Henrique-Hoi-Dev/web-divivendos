@@ -22,7 +22,7 @@ module.exports = {
       },
       total_cost: {
         type: Sequelize.DOUBLE,
-        defaultValue: 0,
+        defaultValue: '0',
       },
       created_at: {
         type: Sequelize.DATE,

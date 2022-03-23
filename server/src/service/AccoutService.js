@@ -15,7 +15,7 @@ export default {
       return result
     }
   }, 
-  async index(req, res) {
+  async index() {
     let result = {}
     try {
       const account = await Account.findAll({
@@ -65,7 +65,9 @@ export default {
   async update(req, res){
     let result = {}
     try {
-      const account = await Account.findByPk(req.id, { 
+      const accountUp = await Account.findByPk(req.id)
+      const accounts = await Account.findAll({ 
+        where: { id: req.id}, 
         include: {
             model: Portion,
             as: 'portion',
@@ -73,10 +75,24 @@ export default {
             separate: true,
           },
       });
+      const soma = accounts.map((result) => {
+        const res = result.dataValues.portion
+          const valor = res.map((resultValor) => {
+            const prices = parseInt(resultValor.dataValues.price);
+            return prices
+          })
+          const total = valor.reduce((acumulado, x) => {
+            return acumulado + x;
+          });
+        return total
+      })
+      const { name, status, date_expired } = res
+      const total_cost = (soma - 0)
+      const account = { name, status, date_expired, total_cost }
+      
+      await accountUp.update(account);
 
-      await account.update(res);
-
-      result = {httpStatus: httpStatus.OK, status: "successful", responseData: account}      
+      result = {httpStatus: httpStatus.OK, status: "successful", responseData: accountUp}      
       return result
     } catch (error) {
       result = {httpStatus: httpStatus.OK, status: "successful", responseData: error}      

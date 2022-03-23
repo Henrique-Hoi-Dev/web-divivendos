@@ -14,31 +14,26 @@ import {
   getByIdAccountRequest,
   resetFormulario,
   UpdateAccountRequest } from '~/store/modules/account/actions';
-import { getByIdPortionAllValueRequest } from '~/store/modules/portion/actions';
 
 export default function RegistrationAccounts() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { form } = useSelector((state) => state.account);
-  const { total } = useSelector((state) => state.portion.form);
-  console.log(total, form)
   
   useEffect(() => {
     if (id) {
       dispatch(getByIdAccountRequest(id));
-      dispatch(getByIdPortionAllValueRequest(id));
     } else {
       dispatch(resetFormulario());
     }
   }, [id, dispatch]);
 
   const handleSubmit = async (values) => {
-    console.log(values)
     try {
       let body = JSON.parse(JSON.stringify(values));
 
       if (id) {
-        dispatch(UpdateAccountRequest({ account_id: id , values: body}));
+        dispatch(UpdateAccountRequest({ account_id: id, values: body }));
       } else {
         dispatch(createAccountRequest(values));
       }
@@ -55,7 +50,10 @@ export default function RegistrationAccounts() {
     <Container>
       <Header title="Registro/Editar Dívidendos"/>
       <div className="header-main">
-        <Formik onSubmit={handleSubmit} enableReinitialize={true} initialValues={form.responseData || form}>
+        <Formik 
+          onSubmit={handleSubmit} 
+          enableReinitialize={true} 
+          initialValues={form.responseData || form}>
             <Form className="form-input">
               <div id="container-input" className="header-title">
 
@@ -73,8 +71,8 @@ export default function RegistrationAccounts() {
                     <option value="paid">Pago</option>
                     <option value="cencelled">Cancelado</option>
                   </Field>
-                  <label htmlFor="total_cost">Valor Total</label>
-                  <Field name="total_cost" value={total} placeholder="valor total"/>
+                  {/* <label htmlFor="total_cost">Valor Total</label> */}
+                  {/* <Field name="total_cost" placeholder="valor total"/> */}
                 </div> 
 
                 <footer className="footer">

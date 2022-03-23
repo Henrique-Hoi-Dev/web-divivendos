@@ -46,13 +46,14 @@ export function* getByIdAccount({ payload }) {
 
 export function* UpdateAccount({ payload }) {
   try {
+
     yield call(api.put, `/account/${payload.data.account_id}`, payload.data.values);
 
     const response = yield call(api.get, `/accounts`);
 
     yield put(findAllAccountSuccess(response.data));
     toast.success('Editado com sucesso.');
-    history.push(`/`)
+    history.push('/')
   } catch (err) {
     toast.error('Error no editar conta.');
     yield put(accountFailure());

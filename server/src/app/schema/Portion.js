@@ -30,6 +30,10 @@ const PortionSchema = new mongoose.Schema(
       type: Date,
       allowNull: false,
     },
+    updated_at: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
   },
   {
     timestamps: true,
@@ -37,4 +41,4 @@ const PortionSchema = new mongoose.Schema(
     toObject: { virtuals: true, getters: true },
   }
 );
-export const PortionModel = mongoose.model('Portion', PortionSchema)
+export default mongoose.model('Portion', PortionSchema)

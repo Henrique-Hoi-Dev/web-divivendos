@@ -25,6 +25,10 @@ const AccountSchema = new mongoose.Schema(
       type: Sequelize.DATE,
       allowNull: false,
     },
+    updated_at: {
+      type: Sequelize.DATE,
+      allowNull: false,
+    },
   },
   {
     timestamps: true,
@@ -32,4 +36,4 @@ const AccountSchema = new mongoose.Schema(
     toObject: { virtuals: true, getters: true },
   }
 );
-export const AccounModel = mongoose.model('Account', AccountSchema)
+export default mongoose.model('Account', AccountSchema)

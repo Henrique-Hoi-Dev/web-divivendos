@@ -11,7 +11,10 @@ class Account extends Model {
           enum: Object.values(STATUS)
         },
         date_expired: Sequelize.DATEONLY,
-        total_cost: Sequelize.DOUBLE,
+        total_cost: { 
+          type: Number,
+          defaultValue: 0
+        }
       },
       {
         sequelize,
